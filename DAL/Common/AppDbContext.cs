@@ -1,10 +1,6 @@
 ﻿using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 
 namespace DAL.Common
 {
@@ -12,8 +8,17 @@ namespace DAL.Common
     {
         internal DbSet<Store> Store { get; set; }
 
+        public AppDbContext()
+            : base()
+        { }
+
         public AppDbContext(DbContextOptions options)
             : base(options)
         { }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(/*inject connection string*/);
+        //}
     }
 }
