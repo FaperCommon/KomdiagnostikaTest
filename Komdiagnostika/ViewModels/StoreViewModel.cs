@@ -1,21 +1,15 @@
-﻿using DAL.Entities;
-using Komdiagnostika.ViewModels;
+﻿using Komdiagnostika.Models;
+using Prism.Commands;
 using Prism.Events;
+using Prism.Services.Dialogs;
+using System;
 
-namespace Komdiagnostika.ViewModelss
+namespace Komdiagnostika.ViewModels
 {
-    public class StoreViewModel : BaseViewModel
+    public class StoreViewModel : BaseDialogViewModel
     {
         private IEventAggregator _eventAggregator;
-        private Store _store;
-
-        public StoreViewModel(Store store, IEventAggregator eventAggregator)
-        {
-            _eventAggregator = eventAggregator;
-            _store = store;
-
-            _title = "Store";
-        }
+        private StoreModel _store;
 
         public string Name
         {
@@ -24,6 +18,7 @@ namespace Komdiagnostika.ViewModelss
             {
                 _store.Name = value;
                 RaisePropertyChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -34,6 +29,7 @@ namespace Komdiagnostika.ViewModelss
             {
                 _store.Author = value;
                 RaisePropertyChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -44,6 +40,7 @@ namespace Komdiagnostika.ViewModelss
             {
                 _store.Year = value;
                 RaisePropertyChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -54,6 +51,7 @@ namespace Komdiagnostika.ViewModelss
             {
                 _store.ISBN = value;
                 RaisePropertyChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -64,6 +62,7 @@ namespace Komdiagnostika.ViewModelss
             {
                 _store.Img = value;
                 RaisePropertyChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -76,5 +75,49 @@ namespace Komdiagnostika.ViewModelss
                 RaisePropertyChanged();
             }
         }
+
+        public DelegateCommand SaveCommand { get; set; }
+
+        public StoreViewModel(IEventAggregator eventAggregator) : base()
+        {
+            _eventAggregator = eventAggregator;
+
+            Title = "Store";
+
+            SaveCommand = new DelegateCommand(Save, CanSave);
+        }
+
+        private void Save()
+        {
+            DialogResult result = new DialogResult();
+            result.Parameters.Add("isSuccess", true);
+            RaiseRequestClose(result);
+        }
+
+        //just a joke
+        public const int FirstYearBook = 868;
+
+        private bool CanSave()
+        {
+            return !String.IsNullOrWhiteSpace(Name) &&
+                !String.IsNullOrWhiteSpace(Author) &&
+                !String.IsNullOrWhiteSpace(ISBN) &&
+                !String.IsNullOrWhiteSpace(Img) &&
+                Year >= FirstYearBook;
+        }
+
+        #region IDialogAware
+
+        public override void OnDialogClosed()
+        {
+        }
+
+        public override void OnDialogOpened(IDialogParameters parameters)
+        {
+            _dialogParametres = parameters;
+            _store = parameters.GetValue<StoreModel>("Store");
+        }
+
+        #endregion
     }
 }

@@ -7,8 +7,36 @@
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{Binding Title}" Height="450" Width="800">
     <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition  Height="*"/>
+            </Grid.RowDefinitions>
+            
+             <!--Header--> 
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Content ="Add New" Margin="5"  Command="{Binding AddStoreCommand}"/>
+                <Button Content ="Edit" Margin="5"  Command="{Binding EditStoreCommand}"/>
+                <Button Content ="Delete" Margin="5"  Command="{Binding RemoveStoreCommand}"/>
+            </StackPanel>
 
+             <!--Content--> 
+            <Grid Grid.Row="1">
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Stores}" SelectedItem="{Binding SelectedStore}" 
+                          AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Width="0.3*" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Name" Width="1*" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Author" Width="1*" Binding="{Binding Author}"/>
+                        <DataGridTextColumn Header="Year" Width="1*" Binding="{Binding Year}"/>
+                        <DataGridTextColumn Header="ISBN" Width="1*" Binding="{Binding ISBN}"/>
+                        <DataGridTextColumn Header="Description" Width="1*" Binding="{Binding Desc}"/>
+                        <DataGridTextColumn Header="Image" Width="1*" Binding="{Binding Img}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

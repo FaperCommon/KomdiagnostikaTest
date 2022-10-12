@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using DAL.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Configuration;
+using System.Windows;
 
 namespace Komdiagnostika
 {

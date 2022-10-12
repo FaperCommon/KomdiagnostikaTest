@@ -1,15 +1,16 @@
 ﻿using Komdiagnostika.ViewModels;
 using Prism.Ioc;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Komdiagnostika.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для StoreView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StoreView : UserControl
     {
-        public MainWindow(IContainerProvider container)
+        public StoreView(IContainerProvider container)
         {
             InitializeComponent();
         }
