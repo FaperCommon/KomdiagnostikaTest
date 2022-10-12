@@ -27,13 +27,18 @@
                 <DataGrid Grid.Row="1" ItemsSource="{Binding Stores}" SelectedItem="{Binding SelectedStore}" 
                           AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Width="0.3*" Binding="{Binding Id}"/>
                         <DataGridTextColumn Header="Name" Width="1*" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="Author" Width="1*" Binding="{Binding Author}"/>
                         <DataGridTextColumn Header="Year" Width="1*" Binding="{Binding Year}"/>
                         <DataGridTextColumn Header="ISBN" Width="1*" Binding="{Binding ISBN}"/>
-                        <DataGridTextColumn Header="Description" Width="1*" Binding="{Binding Desc}"/>
-                        <DataGridTextColumn Header="Image" Width="1*" Binding="{Binding Img}"/>
+                        <DataGridTextColumn Header="Description" Width="1*" Binding="{Binding Desc}" />
+                        <DataGridTemplateColumn Header="Image" Width="SizeToCells" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image MaxHeight="50px" Source="{Binding Img}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

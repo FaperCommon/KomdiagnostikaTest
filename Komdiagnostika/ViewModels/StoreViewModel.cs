@@ -1,4 +1,5 @@
 ﻿using Komdiagnostika.Models;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Services.Dialogs;
@@ -77,6 +78,7 @@ namespace Komdiagnostika.ViewModels
         }
 
         public DelegateCommand SaveCommand { get; set; }
+        public DelegateCommand SelectImageCommand { get; set; }
 
         public StoreViewModel(IEventAggregator eventAggregator) : base()
         {
@@ -85,6 +87,7 @@ namespace Komdiagnostika.ViewModels
             Title = "Store";
 
             SaveCommand = new DelegateCommand(Save, CanSave);
+            SelectImageCommand = new DelegateCommand(SelectImage, () => true);
         }
 
         private void Save()
@@ -92,6 +95,20 @@ namespace Komdiagnostika.ViewModels
             DialogResult result = new DialogResult();
             result.Parameters.Add("isSuccess", true);
             RaiseRequestClose(result);
+        }
+
+        private void SelectImage()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "img files (*.png/*.jpg/*.jpeg)|*.png|*.jpeg|*.jpg";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                Img = openFileDialog.FileName;
+            }
         }
 
         //just a joke
@@ -103,7 +120,7 @@ namespace Komdiagnostika.ViewModels
                 !String.IsNullOrWhiteSpace(Author) &&
                 !String.IsNullOrWhiteSpace(ISBN) &&
                 !String.IsNullOrWhiteSpace(Img) &&
-                Year >= FirstYearBook;
+                (Year >= FirstYearBook && Year <= DateTime.Now.Year);
         }
 
         #region IDialogAware

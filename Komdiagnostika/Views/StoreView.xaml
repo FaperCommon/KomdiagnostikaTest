@@ -36,10 +36,11 @@
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text = "Image:" Width="100" TextAlignment="Right" Margin="5"/>
-                <TextBox Text="{Binding Img}" Width="100px" Margin="5"/>
+                <TextBox Text="{Binding Img}" Width="100px" Margin="5" IsReadOnly="True"/>
             </StackPanel>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content ="Select Image" Margin="5"  Command="{Binding SelectImageCommand}"/>
                 <Button Content = "Save" Command="{Binding SaveCommand}"  Margin="5"/>
             </StackPanel>
         </StackPanel>
